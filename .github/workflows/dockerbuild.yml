@@ -29,6 +29,6 @@ jobs:
         with:
           push: true
           build-args: |
-            ARCH_NAME=${{ matrix.arch_name }}
+            TARGET_ARCH=${{ matrix.arch_name }}
             FBSD_VERSION=${{ matrix.fbsd_version }}
           tags: gotson/freebsd-cross-build:${{ matrix.arch_name }}-${{ matrix.fbsd_version }}
