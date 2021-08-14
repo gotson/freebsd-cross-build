@@ -2,11 +2,17 @@
 
 Docker image to enable C/C++ cross-compilation targeting FreeBSD from a Linux host, using Clang.
 
+Built upon https://github.com/SpectraLogic/freebsd-cross-build and https://github.com/MrDOS/freebsd-cross-build.
+
+## Usage
+
 To run:
 
 ```shell
 docker run --rm <tag> bash -c 'make'
 ```
+
+Check the available tags directly on [DockerHub](https://hub.docker.com/repository/docker/gotson/freebsd-cross-build).
 
 ## Dockerfile parameters
 
@@ -22,10 +28,10 @@ due to limitations inherent to Make's string handling,
 spaces in environment variable values
 will likely cause your computer to catch fire.
 
-* `FBSD_VERSION`:
+- `FBSD_VERSION`:
   The version of FreeBSD to target. Doesn't work with versions prior to 11.
   (default: 11.4)
-* `TARGET_ARCH`:
+- `TARGET_ARCH`:
   The target architecture.
   Possible values: x86_64, i686, aarch64
   (default: x86_64)
@@ -35,4 +41,5 @@ Example:
 ```shell
 docker build -t gotson/freebsd-cross-build:aarch64-12.2 --build-arg FBSD_VERSION=12.2 --build-arg TARGET_ARCH=aarch64 .
 ```
+
 [build-arg]: https://docs.docker.com/engine/reference/builder/#arg
