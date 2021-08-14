@@ -3,9 +3,9 @@ name: Docker Build
 on:
   push:
     branches:
-    - 'master'
+      - "dev"
     paths-ignore:
-      - '**.md'
+      - "**.md"
   workflow_dispatch:
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Login to DockerHub
-        uses: docker/login-action@v1 
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -28,7 +28,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          build-args:
-            - ARCH_NAME=${{ matrix.arch_name }}
-            - FBSD_VERSION=${{ matrix.fbsd_version }}
+          build-args: |
+            ARCH_NAME=${{ matrix.arch_name }}
+            FBSD_VERSION=${{ matrix.fbsd_version }}
           tags: gotson/freebsd-cross-build:${{ matrix.arch_name }}-${{ matrix.fbsd_version }}
