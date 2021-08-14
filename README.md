@@ -2,7 +2,7 @@
 
 Docker image to enable C/C++ cross-compilation targeting FreeBSD from a Linux host, using Clang.
 
-Built upon https://github.com/SpectraLogic/freebsd-cross-build and https://github.com/MrDOS/freebsd-cross-build.
+Built upon [SpectraLogic/freebsd-cross-build](https://github.com/SpectraLogic/freebsd-cross-build) and [MrDOS/freebsd-cross-build](https://github.com/MrDOS/freebsd-cross-build).
 
 ## Usage
 
