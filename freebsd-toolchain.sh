@@ -4,9 +4,10 @@
 set -eux
 
 arch=$1
+freebsd_version=$2
+freebsd_major=$(echo $freebsd_version | cut -d '.' -f 1)
 binutils_version=2.34
-freebsd_version=12.1
-triple=$arch-unknown-freebsd12
+triple=$arch-unknown-freebsd$freebsd_major
 sysroot=/usr/local/$triple
 
 hide_output() {
@@ -43,6 +44,7 @@ mkdir -p "$sysroot"
 case $arch in
   (x86_64) freebsd_arch=amd64 ;;
   (i686) freebsd_arch=i386 ;;
+  (aarch64) freebsd_arch=arm64 ;;
 esac
 
 files_to_extract=(

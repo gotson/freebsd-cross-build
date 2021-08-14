@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:20.04 AS compile
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -14,11 +14,27 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   pkg-config
 
 COPY freebsd-toolchain.sh /tmp/
-RUN /tmp/freebsd-toolchain.sh x86_64
 
-ENV \
-    AR=x86_64-unknown-freebsd12-ar \
-    CC=x86_64-unknown-freebsd12-clang \
-    CX=x86_64-unknown-freebsd12-clang++
+# The FreeBSD version to target for cross-compilation.
+ARG FBSD_VERSION=11.4
+ARG TARGET_ARCH=x86_64
 
-ENV HOSTS=x86_64-unknown-freebsd
+RUN /tmp/freebsd-toolchain.sh ${TARGET_ARCH} ${FBSD_VERSION}
+
+
+FROM ubuntu:20.04 AS deploy
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  make \
+  file \
+  curl \
+  ca-certificates \
+  wget \
+  openjdk-8-jdk
+
+COPY --from=compile \
+     /usr/local/ \
+     /usr/local/
+
+WORKDIR /workdir
+
