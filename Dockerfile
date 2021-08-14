@@ -25,6 +25,7 @@ RUN /tmp/freebsd-toolchain.sh ${TARGET_ARCH} ${FBSD_VERSION}
 FROM ubuntu:20.04 AS deploy
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+  clang \
   make \
   file \
   curl \
@@ -33,8 +34,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   openjdk-8-jdk
 
 COPY --from=compile \
-     /usr/local/ \
-     /usr/local/
+  /usr/local/ \
+  /usr/local/
 
 WORKDIR /workdir
 
